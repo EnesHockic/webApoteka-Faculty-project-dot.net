@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "DefaultLayout";
+
+}
+@model WebApp_Apoteka.ViewModels.Konkurs.PrikaziKonkursVM
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Lista konkursa</title>
+    <style>
+        h1 {
+            text-align: center;
+            font-weight: 700;
+            font-family: "Roboto", sans-serif;
+            font-size: 1.7em;
+            line-height: 1.3;
+            color: #555;
+            max-width: 100%;
+            margin-bottom: .3em;
+        }
+
+        .entry-meta {
+            text-align: center;
+        }
+
+        img {
+        }
+        .file{
+            width:50%;
+            float:left;
+        }
+    </style>
+</head>
+<body>
+    <div style="padding-top: 40px;">
+        
+        <h1>@Model.Naziv</h1><br />
+        <div class="entry-meta uppercase is-xsmall">
+            <span style="text-align:center; margin-bottom:40px;">Rok za prijavu <time>@Model.Rok</time></span>
+        </div>
+        
+        <div style="padding:20px;">
+            @Html.Raw(Model.Sadrzaj)
+        </div>
+
+    </div>
+    @if(User.IsInRole("Korisnik")&&!Model.VecAplicirao && Model.Stanje)
+    {
+
+        <form enctype="multipart/form-data" asp-action="KonkurisiPraktikanta">
+            <input asp-for="ID" hidden/>
+            <div class="custom-file file">
+                <span asp-validation-for="CV" class="text-danger"></span>
+                <input asp-for="CV" class="form-control custom-file-input" />
+                <label class="custom-file-label">Izaberite osobni dosije...</label>
+            </div>
+            <div class="custom-file file">
+                <span asp-validation-for="ML" class="text-danger"></span>
+                <input asp-for="ML" class="form-control custom-file-input" />
+                <label class="custom-file-label">Izaberite motivaciono pismo...</label>
+            </div>
+            <input type="submit" value="Konkuriši" class="btn btn-success" style="background-color:#2b731e; color: #FAFAFA " />
+
+            @section Scripts{
+                <script>
+
+                    $(document).ready(function () {
+                        $('.custom-file-input').on("change", function () {
+                            var fileName = $(this).val().split("\\").pop();
+                            $(this).next('.custom-file-label').html(fileName);
+                        });
+
+                    })
+                </script>
+
+            }
+
+        </form>
+    }
+</body>
+</html>

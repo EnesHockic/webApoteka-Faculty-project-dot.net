@@ -1,0 +1,108 @@
+﻿@model LijekKolicinaView
+@{
+
+    Layout = "DefaultLayout";
+    int stanjeKosarice = (int)ViewData["stanjeKosarice"];
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script src="jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Prikazi stanje</title>
+    <style>
+        tr, th, td {
+            
+            border: 1px solid;
+            text-align: center;
+           
+        }
+    </style>
+</head>
+<body>
+    <div id="kosarica">
+
+        <br /> <br />
+        <h3 class="text-success">Prikaz količinskog stanja lijekova</h3>
+        <br />
+        <a href="/Nabavka/Export" class="btn btn-secondary" >Skini excel file</a>
+        @if (stanjeKosarice > 0)
+        {
+            <a href="/Nabavka/PregledKosariceNabavke" class="btn btn-success" style="float: right; margin-bottom: 2%;">Pregledaj nabavnu košaricu</a>
+            <br />
+        }
+        <table class="table table-bordered" style="        background-color: #2b731e;
+        color: white;
+
+       ">
+
+            <tr>
+
+                <th>Naziv lijeka</th>
+
+                <th>Nabavna cijena</th>
+                <th>Količina</th>
+                <th>Naruči</th>
+            </tr>
+
+            @foreach (var l in Model.podaci)
+            {
+
+
+                <tr style="background-color: #FAFAFA; color:#2b731e; text-align: center">
+
+                    <td style="font-weight: bold">@l.nazivLijeka</td>
+
+                    <td>@l.nabavnaCijenaLijeka KM</td>
+                    @if (l.kolicina > 0)
+                    {
+                        <td style="font-weight: bold;" class="text-success">@l.kolicina</td>
+                    }
+                    else
+                    {
+                        <td style="font-weight: bold;" class="text-danger">@l.kolicina</td>
+                    }
+                    <td>
+                        <button type="button" class="btn btn-success btnPrikaz" idValue="@l.lijekID">+</button>
+                        @if (l.kolicina == 0)
+                        {
+
+                                <a href="/Lijek/Uklanjanje?id=@l.lijekID&nabavka=@true" class="btn btn-danger">Ukloni</a>
+                        }
+                    </td>
+
+
+                </tr>
+            }
+        </table>
+
+    </div>
+    <div id="kosarica">
+
+    </div>
+</body>
+</html>
+<script>
+  
+    $(".btnPrikaz").click(function () {
+
+            var btn = $(this);
+            var id = btn.attr("idValue");
+      
+            $.ajax({
+                url: "@Url.Action("PrikaziLijek", "Nabavka")",
+                type: "GET",
+                data: { lijekID: id },
+                success: function (data, event) {
+                    $("#kosarica").html(data);
+                }
+            });
+        });
+</script>

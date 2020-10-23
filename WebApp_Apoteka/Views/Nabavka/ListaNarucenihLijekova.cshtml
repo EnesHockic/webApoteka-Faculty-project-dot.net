@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "DefaultLayout";
+
+    //double vrijednost = (double)ViewData["vrijednost"];
+
+}
+@model NabavkaViewM
+    <script src="jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+
+
+        tr, td, th {
+            border: 1px solid #d2fcd7;
+        }
+
+            tr:nth-child(even) {
+                background-color: #f0fff2;
+            }
+    </style>
+    <title>Lista nabavki</title>
+        <br />
+        <h4>Nabavke apotekara @Model.imePrezime</h4>
+        <hr />
+        
+    <div id="detalji">
+        <table class="table table-striped" style="text-align: center; border: 1px solid ">
+            <tr class="table-success">
+
+                <th>Datum nabavke</th>
+                <th>Vrijednost narudzbe</th>
+                <th>Status nabavke</th>
+                <th>Detalji nabavke</th>
+
+            </tr>
+
+            @foreach (var n in Model.podaci)
+            {
+                <tr>
+
+                    <td>@n.datum</td>
+                    <td>@n.vrijednostNarudzbe KM</td>
+                    @if (n.statusNarudzbe == false)
+                    {
+                        <td><a href="/Nabavka/Dostavljeno?id=@n.ID" class="btn btn-danger">Nije dostavljeno</a></td>
+                    }
+                    else
+                    {
+                        <td class="btn btn-success">
+                            Dostavljeno datuma: @n.datumPrimanja.ToShortDateString()
+                        </td>
+
+                    }
+                    <td><button type="button" class="btn btn-success btnDetalji" style="color: white" idValue ="@n.ID">+</button></td>
+
+
+                </tr>
+            }
+        </table>
+    </div>
+    <div id="detalji">
+
+    </div>
+
+    <script>
+          $(".btnDetalji").click(function () {
+
+            var btn = $(this);
+            var id = btn.attr("idValue");
+
+            $.ajax({
+                url: "@Url.Action("DetaljiNabavke", "Nabavka")",
+                type: "GET",
+                data: { nabavkaID: id },
+                success: function (data, event) {
+                    $("#detalji").html(data);
+                }
+            });
+        });
+    </script>

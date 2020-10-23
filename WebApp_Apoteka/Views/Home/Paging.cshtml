@@ -1,0 +1,27 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<Clanak>
+@using ReflectionIT.Mvc.Paging;
+@addTagHelper *,ReflectionIT.MVC.Paging
+
+
+
+
+
+
+@foreach (var i in Model)
+{
+    var imagePath = "~/ClanakImages/" + (i.SlikaPath ?? "error.png");
+    <div class="forma">
+        <div class="image-cont" style="box-sizing:border-box;">
+            <img style="height:300px; width:300px;" class="ClanakImages" src="@imagePath" asp-append-version="true" />
+
+        </div>
+
+        <div style="text-align:center;padding-top:15%; ">
+            <h4><a asp-controller="Clanak" asp-action="ViewClanak" asp-route-Id=@i.ClanakID>@i.Naslov</a></h4>
+        </div>
+    </div>
+}
+
+<nav aria-label="Clanak Paging">
+    @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+</nav>

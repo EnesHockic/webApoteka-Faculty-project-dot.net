@@ -1,0 +1,65 @@
+﻿@using WebApp_Apoteka.Entity_Framework;
+@{
+    Layout = null;
+    
+    var lijek = (Lijek)@TempData["kljucLijeka"];
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Uredi lijek</title>
+    <style>
+        .forma {
+            max-width: 50%;
+            background: #FAFAFA;
+            padding: 30px;
+            margin: 50px auto;
+            box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+            border-radius: 10px;
+            border: 6px solid #2b731e;
+        }
+
+            .forma input {
+                margin-bottom: 20px;
+                width: 100%;
+                padding: 10px;
+                font-family: Calibri;
+                font-size: medium;
+            }
+    </style>
+</head>
+<body>
+    <form action="/Lijek/UredjivanjeLijeka?id=@lijek.LijekID" method="post" class="forma">
+
+        <input type="text" name="NNaziv" value="@lijek.NazivLijeka" />
+
+
+        <input type="text" name="NGeneric"  value="@lijek.InternacionalniGenerickiNaziv" />
+
+
+        <input type="text" name="Nkvan"  value="@lijek.KvalitativniIKvantitativniSastav" />
+
+
+        <input type="text" name="NFarm"  value="@lijek.FarmaceutskiOblik" />
+
+        <input type="text" name="NDozir"  value="@lijek.NacinPrimjene" />
+
+        <input type="text" name="NRok" value="@lijek.RokTrajanjaMjeseci" />
+
+        <input type="text" name="NProizv"  value="@lijek.NazivProizvodjaca" />
+        <br />
+        <br />
+
+        <a style="color:#2b731e; font-family: Calibri; font-size: medium">
+            Datum dodavanja u promet
+        </a>
+        <input type="datetime-local" name="NDp" />
+
+        <input type="submit" value="Spasi izmjene" style="background-color:#2b731e; color: #FAFAFA " />
+    </form>
+</body>
+</html>
+

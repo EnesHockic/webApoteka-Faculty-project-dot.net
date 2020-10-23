@@ -1,0 +1,132 @@
+﻿@{ 
+    Layout = "DefaultLayout";
+    double ukupno = 0;
+    KosaricaView podaci = (KosaricaView)ViewData["podaci"];
+    string userid = (string)ViewData["user"];
+    var k = (Korisnik)ViewData["korisnik"];
+}
+@model AddNabavkaViewM
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+  
+    <title>Usluga</title>
+    <style>
+
+        #form {
+            max-width: 50%;
+            background: #FAFAFA;
+            padding: 10px;
+            margin: 10px auto;
+            box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+            border-radius: 10px;
+            border: 6px solid #2b731e;
+        }
+
+        h5 {
+            font-family: Calibri;
+            margin-top: -14px;
+            color: #2b731e;
+            font-size: 15px;
+        }
+
+        h4 {
+            font-family: Calibri;
+            margin-bottom: -9px;
+            font-size: 20px;
+        }
+
+        hr {
+            border-color: #2b731e;
+        }
+        table {
+            font-family: Calibri;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+
+</head>
+<body>
+
+    <form asp-action="DodajNabavku" method="post" id="form">
+
+        <input asp-for="ID" hidden />
+        <input asp-for="@userid" hidden />
+
+        <h4>
+            @(k.Ime
+        + " " + k.Prezime)
+        </h4>
+        <hr>
+        <h5>Apotekar</h5>
+
+        <h4>@k.Telefon</h4>
+        <hr>
+        <h5>Broj telefona</h5>
+
+        <h4>@Model.nazivApoteke</h4>
+        <hr>
+        <h5>Apoteka</h5>
+
+
+
+
+
+        <h4>Kosarica</h4>
+        <br />
+        <table>
+
+            <tr style="color:#2b731e">
+
+                <th>Naziv lijeka</th>
+                <th>Kolicina </th>
+                <th>Cijena</th>
+                <th>Ukupna cijena</th>
+
+
+            </tr>
+
+            @foreach (var l in podaci.podaci)
+            {
+                <tr style="background-color: #FAFAFA;  text-align: center">
+
+                    <td>@l.NazivLijeka</td>
+                    <td>@l.Kolicina</td>
+                    <td>@l.Cijena</td>
+
+                    <td>@(l.Kolicina * l.Cijena) KM</td>
+                    <a hidden>@(ukupno += (l.Kolicina * l.Cijena)) </a>
+                </tr>
+            }
+
+        </table>
+        <hr />
+
+
+
+        <input asp-for="vrijednostNarudzbe" value="@(ukupno)" hidden />
+        <h4>@(ukupno) KM</h4>
+        <hr>
+        <h5>Ukupna vrijednost nabavke</h5>
+
+        <input asp-for="@Model.nabavnaCijena" value="@Model.nabavnaCijena" hidden/>
+
+        <input type="submit"  value ="Naruči" style="width: 100%"class="btn btn-success" />
+    </form>
+
+
+</body>
+</html>

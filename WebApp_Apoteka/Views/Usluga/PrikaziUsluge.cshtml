@@ -1,0 +1,133 @@
+﻿@inject SignInManager<AppUser> signInManager
+@{
+    Layout = "DefaultLayout";
+
+}
+@using WebApp_Apoteka.ViewModels;
+@model UslugaView
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PrikaziLijekove</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   
+    <style>
+        tr, td, th {
+            border: 1px solid;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <br /><br />
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin")) //trebao bi biti apotekar, ali ne radi
+    {
+        <nobr>
+            <a href="/Usluga/DodajUsluga?=0" class="btn btn-success">Dodaj uslugu</a>
+
+            <a href="/Usluga/PrikazRezervisanihTermina" class="btn btn-success">Prikaz rezervisanih termina</a>
+        </nobr>
+
+    }
+    @if (Model.postoji)
+    {
+
+        <a href="/Usluga/MojiTermini" class="btn btn-info" style="float: right">Moji termini</a>
+    }
+    <br />
+    <br />
+    <table class="table table-bordered" style="background-color: #2b731e; color: white;
+
+          ">
+
+        <tr>
+
+            <th>Naziv usluge</th>
+            <th>Datum održavanja usluge </th>
+            <th>Napomena</th>
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+            {
+                <th>Broj Pacijenata</th>
+                <th>Akcije</th>
+            }
+            else
+            {
+                <th>Rezervacija</th>
+            }
+        </tr>
+
+        @foreach (var l in Model.podaci)
+        {
+    <tr style="background-color: #FAFAFA; color:#2b731e; text-align: center">
+
+        <td>@l.Naziv</td>
+        <td>@l.DatumVrijeme</td>
+        <td>@l.Napomena</td>
+
+        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {
+            <td>@l.BrojPacijenata</td>
+            <td>
+
+            <a href="/Usluga/Uklanjanje?id=@l.ID" class="btn btn-danger">Brisi</a>
+            <a href="/Usluga/DodajUsluga?id=@l.ID" class="btn btn-secondary">Uredi</a>
+            </td>
+
+        }
+
+        else
+        {
+            <td>
+                <a href="/Usluga/RezervisiTermin?uslugaID=@l.ID" class="btn btn-success">Rezervisi termin</a>
+            </td>
+        }
+
+    </tr>
+        }
+    </table>
+    @if (Model.Rezervisano || Model.BrojPacijenata)
+    {
+        <div class="container">
+
+            <div class="modal fade" id="myModal" role="dialog" style="margin-top: 15%">
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+
+                        <div class="modal-body">
+                            <nobr>
+                                @if (Model.Rezervisano) 
+                                {
+                                    <h4>Već ste se rezervisali termin na ovu uslugu!</h4>
+                                }
+                                else
+                                {
+                                    <h4>Broj termina je popunjen!</h4>
+                                }
+                                <a href="/Usluga/PrikaziUsluge" class="btn btn-success" data-ng-click="modal" style="margin-top:-13%; margin-left: 90%">OK</a>
+                            </nobr>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    }
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        $("#myModal").modal('show');
+    }
+    );
+</script>

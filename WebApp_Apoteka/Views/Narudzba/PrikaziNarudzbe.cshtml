@@ -1,0 +1,97 @@
+﻿
+@{
+    Layout = "DefaultLayout";
+
+
+}
+@model List<NarudzbaViewM>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Prikazi narudzbe</title>
+    <style>
+        #glavnii {
+            margin-left: 25%;
+            margin-top: 5%;
+            border: 1px solid green;
+            margin-right: 25%;
+            padding: 10px;
+            border-radius: 2%;
+        }
+        tr{
+            text-align: center;
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+   
+    <br />
+     <a href="/Narudzba/ConvertToPdf" class="btn btn-primary">Otvori u pdf</a>
+
+   
+    
+
+    <br /><br />
+    <div id="detalji">
+        <table class="table table-striped" style="">
+            <tr>
+                <th>Naručio</th>
+                <th>Grad i adresa</th>
+
+                <th>Datum narudžbe</th>
+                <th>Vrijednost narudžbe</th>
+                <th>Status</th>
+                <th>Detalji</th>
+            </tr>
+            @foreach (var i in Model)
+            {
+                <tr>
+                    <td>@i.narucioKorisnik</td>
+                    <td>@i.grad, @i.adresa</td>
+                    <td>@i.datumNarudzbe</td>
+                    <td>@i.vrijednostNarudzbe KM</td>
+                    @if (i.statusNarudzbe && (User.IsInRole("Korisnik") || User.IsInRole("Admin")))
+                    {
+                        <td>Poslano @i.datumSlanja.ToShortDateString()</td>
+                    }
+                    else if (i.statusNarudzbe == false && User.IsInRole("Korisnik"))
+                    {
+                        <td>Na obradi</td>
+                    }
+                    else if (i.statusNarudzbe == false && User.IsInRole("Admin"))
+                    {
+                        <td><a href="/Narudzba/Posalji?id=@i.ID" class="btn btn-secondary">Pošalji</a></td>
+                    }
+
+                    <td><button type="button" class="btn btn-success btnDetalji" idValue="@i.ID">+</button></td>
+
+                </tr>
+            }
+
+        </table>
+    </div>
+
+    <div id="detalji"></div>
+</body>
+</html>
+<script>
+    $(".btnDetalji").click(function () {
+
+            var btn = $(this);
+            var id = btn.attr("idValue");
+
+            $.ajax({
+                url: "@Url.Action("DetaljiNarudzbe", "Narudzba")",
+                type: "GET",
+                data: { narudzbaID: id },
+                success: function (data, event) {
+                    $("#detalji").html(data);
+                }
+            });
+        });
+</script>

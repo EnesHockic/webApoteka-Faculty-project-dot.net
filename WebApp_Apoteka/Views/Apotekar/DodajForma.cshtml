@@ -1,0 +1,94 @@
+﻿@using Apoteka.ViewModel;
+
+@{
+    ViewData["Title"] = "DodajForma";
+    Layout = null;
+}
+@model WebApp_Apoteka.ViewModels.AddApotekarVM
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DodajLijek</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <style>
+        .forma {
+            max-width: 50%;
+            background: #FAFAFA;
+            padding: 30px;
+            margin: 50px auto;
+            box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+            border-radius: 10px;
+            border: 6px solid #2b731e;
+        }
+
+            .forma input {
+                margin-bottom: 20px;
+                width: 100%;
+                padding: 10px;
+                font-family: Calibri;
+                font-size: medium;
+            }
+
+        select {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            font-family: Calibri;
+            font-size: medium;
+            margin-bottom: 20px;
+                width: 100%;
+                padding: 10px;
+                font-family: Calibri;
+                font-size: medium;
+        }
+        .buttonNazad{
+            font: bold 11px Arial;
+              text-decoration: none;
+              background-color: #EEEEEE;
+              color: #333333;
+              padding: 2px 6px 2px 6px;
+              border-top: 1px solid #CCCCCC;
+              border-right: 1px solid #333333;
+              border-bottom: 1px solid #333333;
+              border-left: 1px solid #CCCCCC;
+              background-color:#7a7a7a; 
+              color: #FAFAFA;
+              margin-bottom: 20px;
+                width: 100%;
+                padding: 10px;
+                font-family: Calibri;
+                font-size: medium;
+            text-decoration:none;
+        }
+        .buttonNazad:hover{
+            text-decoration:none;
+            color:white;
+        }
+    </style>
+</head>
+<body>
+
+    @*<form asp-action="SnimiForma" class="forma">
+        <input asp-for="ID" value=@Model.ID style="display:none"/><br />
+        <input asp-for="Ime" value=@Model.Ime placeholder="Ime" /><br />
+        <input asp-for="Prezime" value=@Model.Prezime placeholder="Prezime" /><br />
+        <input asp-for="JMBG" value=@Model.JMBG placeholder="JMBG" /><br />
+        <a style="color:#2b731e; font-family: Calibri; font-size: medium">
+            Datum Rođenja
+        </a>
+        <input type="date" asp-for="DatumRodjenja" placeholder="Datum Zaposlenja"/><br />
+        <select asp-for="MjestoRodjenjaID" asp-items="@Model.ListaOpstina">
+                <option>(Mjesto rodjenja)</option>
+        </select><br />
+        <a style="color:#2b731e; font-family: Calibri; font-size: medium">
+            Datum Zapošljavanja
+        </a>
+        <input type="date" asp-for="DatumZaposlenja" placeholder="Datum Zaposlenja" /><br /><br />
+        <input type="submit" value="Snimi" style="background-color:#2b731e; color: #FAFAFA " />
+        <a class="buttonNazad " href="/Home/Index">Nazad</a>
+    </form>*@
+</body>
+</html>

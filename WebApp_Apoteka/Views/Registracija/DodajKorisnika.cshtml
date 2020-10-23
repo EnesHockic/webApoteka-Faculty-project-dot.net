@@ -1,0 +1,93 @@
+﻿@model WebApp_Apoteka.ViewModels.AddKorisnikVM;
+
+@{
+    Layout = "DefaultLayout";
+    ViewData["Title"] = "DodajKorisnika";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registracija</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <style>
+        .forma {
+            max-width: 50%;
+            background: #FAFAFA;
+            padding: 30px;
+            margin: 50px auto;
+            box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+            border-radius: 10px;
+            border: 6px solid #2b731e;
+        }
+
+            .forma input {
+                margin-bottom: 20px;
+                width: 100%;
+                padding: 10px;
+                font-family: Calibri;
+                font-size: medium;
+            }
+
+        select {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            font-family: Calibri;
+            font-size: medium;
+            margin-bottom: 20px;
+                width: 100%;
+                padding: 10px;
+                font-family: Calibri;
+                font-size: medium;
+        }
+
+            .forma input {
+                margin-bottom: 20px;
+                width: 100%;
+                padding: 10px;
+                font-family: Calibri;
+                font-size: medium;
+            }
+    </style>
+</head>
+<body>
+    <form asp-action="SnimiKorisnika" method="post" class="forma">
+        <input type="text" asp-for="Ime" placeholder="Ime" /><br />
+
+
+        <input type="text" asp-for="Prezime" placeholder="Prezime" /><br />
+
+        <a style="color:#2b731e; font-family: Calibri; font-size: medium">
+            Datum rodjenja
+        </a><br />
+
+        <input type="date" asp-for="DatumRodjenja" placeholder="Datum rodjenja" /><br />
+
+        <select asp-for="OpstinaRodjenjaID" asp-items="Model.Opstine">
+            <option>Mjesto rodjenja</option>
+        </select><br />
+        <input type="text" asp-for="Adresa" placeholder="Adresa" /><br />
+        <input type="tel" asp-for="Telefon" placeholder="Telefon" /><br />
+
+        <select asp-for="TipKorisnikaID" asp-items="Model.TipoviKorisnika">
+            <option>Uloga na stranici</option>
+        </select><br />
+        <input type="email" asp-for="Email" placeholder="E-mail" />
+        @if(Model.PorukaEmailPostoji!="")
+        {
+            <a style="margin:0">@Model.PorukaEmailPostoji</a>
+        }
+        <br />
+        <input type="password" asp-for="Password" placeholder="Password" />
+
+        <br />
+        <input type="submit" value="POTVRDI" style="background-color:#2b731e; color: #FAFAFA " />
+    </form>
+</body>
+</html>

@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "DefaultLayout";
+   
+}
+@using WebApp_Apoteka.ViewModels;
+@model RezervacijaTerminaView
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PrikaziLijekove</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        tr, th, td {
+            border: 1px solid;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <br />
+    <a href="/Usluga/PrikaziUsluge" class="btn btn-secondary">Nazad</a>
+    <br />
+    <br />
+    <table class="table table-bordered" style="background-color: #2b731e; color: white; 
+          
+           ">
+
+        <tr>
+            
+            <th>Ime i prezime</th>
+            <th>Usluga </th>
+            <th>Datum rezervacije</th>
+            <th>Modifikacija podataka</th>
+        </tr>
+
+        @foreach (var l in Model.podaci)
+        {
+    <tr style="background-color: #FAFAFA; color:#2b731e; text-align: center">
+       
+        <td>@l.ImePrezime</td>
+        <td>@l.NazivUsluge</td>
+        <td>@l.DatumRezervacije</td>
+        
+       <td>
+           <a href="/Usluga/ObrisiRezervaciju?id=@l.UslugaID&korisnik=@l.KorisnikID" class="btn btn-danger">Ukloni</a>
+       </td>
+    </tr>
+        
+        }
+    </table>
+</body>
+</html>

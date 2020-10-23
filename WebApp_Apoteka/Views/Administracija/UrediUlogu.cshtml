@@ -1,0 +1,115 @@
+﻿@model EditRoleVM
+@{
+    Layout = "DefaultLayout";
+    ViewData["Title"] = "Uredi Ulogu";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registracija</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <style>
+        .forma {
+            max-width: 50%;
+            background: #FAFAFA;
+            padding: 30px;
+            margin: 50px auto;
+            box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+            border-radius: 10px;
+            border: 6px solid #2b731e;
+        }
+
+            .forma input {
+                margin-bottom: 20px;
+                width: 100%;
+                padding: 10px;
+                font-family: Calibri;
+                font-size: medium;
+            }
+
+        select {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            font-family: Calibri;
+            font-size: medium;
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            font-family: Calibri;
+            font-size: medium;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            margin: 0;
+        }
+
+        .forma input {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            font-family: Calibri;
+            font-size: medium;
+        }
+    </style>
+</head>
+<body>
+    <h1>Uredi ulogu</h1>
+    <form method="post" class="mt-3">
+        <div class="form-group row">
+            <label asp-for="ID" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="ID" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="RoleName" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="RoleName" class="form-control" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div asp-validation-summary="All" class="text-danger">  </div>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Sacuvaj</button>
+                <a asp-action="RolePrikaz" class="btn btn-primary">Nazad</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3>Korisnici u ovoj ulozi</h3>
+            </div>
+            <div class="card-body">
+                @if (Model.Users.Any())
+                {
+                    foreach (var user in Model.Users)
+                    {
+                        <h5 class="card-title">@user</h5>
+                    }
+                }
+                else
+                {
+                    <h5 class="card-title">Nema korisnika</h5>
+                }
+            </div>
+            <div class="card-footer">
+                <a asp-action="AddRemoveKorisnikaUlogu" asp-controller="Administracija" asp-route-UlogaID="@Model.ID" class="btn btn-primary">Dodaj/ukloni korisnika</a>
+            </div>
+        </div>
+
+    </form>
+</body>
+</html>

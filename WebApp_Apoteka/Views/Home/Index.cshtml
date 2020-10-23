@@ -1,0 +1,234 @@
+﻿
+@*@model List<WebApp_Apoteka.ViewModels.Clanak.ListaClanakaVM>*@
+@model ReflectionIT.Mvc.Paging.PagingList<Clanak>
+@using ReflectionIT.Mvc.Paging;
+@addTagHelper *,ReflectionIT.MVC.Paging
+@{
+    Layout = "DefaultLayout";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <title>Pocetna</title>
+    <style>
+
+
+        .forma {
+            max-width: 100%;
+            display: grid;
+            grid-template-columns: 320px auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+            .forma a {
+                text-decoration: none;
+                font-family: Calibri;
+                font-size: 1.15em;
+                font-weight: 700;
+                font-family: "Roboto", sans-serif;
+                color: #555;
+            }
+
+        h3 {
+            max-width: 50%;
+            font-family: Calibri;
+            margin: 30px auto;
+            color: #2b731e
+        }
+
+        #Novosti {
+            font-size: 170%;
+            color: rgb(153, 0, 51);
+            margin: 0 15px;
+            text-align: center;
+        }
+
+        #Novosti-h3 {
+            position: relative;
+            max-width: 100%;
+            font-family: "Roboto", sans-serif;
+            text-align: center;
+            display: flex;
+            align-items: center;
+        }
+
+            #Novosti-h3 b {
+                display: block;
+                -ms-flex: 1;
+                flex: 1;
+                height: 2px;
+                opacity: .1;
+                background-color: currentColor;
+            }
+
+        .slider-frame {
+            overflow: hidden;
+            height: 526px;
+            width: 100%;
+        }
+
+        @@-webkit-keyframes slide_animation {
+            0% {
+                left: 0px;
+            }
+
+            10% {
+                left: 0px;
+            }
+
+            20% {
+                left: 100%;
+            }
+
+            30% {
+                left: 100%;
+            }
+
+            40% {
+                left: 200%;
+            }
+
+            50% {
+                left: 200%;
+            }
+
+            60% {
+                left: 100%;
+            }
+
+            70% {
+                left: 100%;
+            }
+
+            80% {
+                left: 0px;
+            }
+
+            90% {
+                left: 0px;
+            }
+
+            100% {
+                left: 0px;
+            }
+        }
+
+        .slide-images {
+            width: 300%;
+            height: 526px;
+            margin: 0 0 0 -200%;
+            position: relative;
+            -webkit-animation-name: slide_animation;
+            -webkit-animation-duration: 33s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-direction: alternate;
+            -webkit-animation-play-state: running;
+        }
+
+        .img-container {
+            height: 526px;
+            width: 33.3333%;
+            position: relative;
+            float: left;
+        }
+
+        .slide-images img {
+            height: 526px;
+            width: 100%;
+        }
+
+        .ClanakImages {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            font-family: 'object-fit: cover;';
+        }
+
+        #btnObjava {
+            position: relative;
+            float: right;
+            left: 20px;
+            text-decoration:none;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="slider-frame" style="margin:0;">
+        <div class="slide-images">
+            <div class="img-container">
+                <img src="https://www.eapoteka.ba/wp-content/uploads/2018/03/slide1_compressed.jpg" />
+            </div>
+            <div class="img-container">
+                <img src="https://www.eapoteka.ba/wp-content/uploads/2018/03/slide2_compressed.jpg">
+            </div>
+            <div class="img-container">
+                <img src="https://www.eapoteka.ba/wp-content/uploads/2018/05/online-epoteka1_compressed.jpg" />
+            </div>
+        </div>
+
+    </div>
+    <div style=" padding-left: 100px;
+        padding-right: 100px;">
+        @if(User.IsInRole("Apotekar"))
+        {
+        <a id="btnObjava" class="btn-light" asp-action="ObjaviClanak" asp-controller="Clanak">Objavi članak</a>
+        }
+        <div style="margin-top: 20px;
+        max-width: 100%;">
+            <h3 id="Novosti-h3">
+                <b></b>
+                <span id="Novosti">Novosti</span>
+                <b></b>
+            </h3>
+        </div>
+        @*<nav aria-label="Clanak Paging">
+            @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+        </nav>*@
+
+
+        @foreach (var i in Model)
+        {
+            var imagePath = "~/ClanakImages/" + (i.SlikaPath ?? "error.png");
+            <div class="forma">
+                <div class="image-cont" style="box-sizing:border-box;">
+                    <img style="height:300px; width:300px;" class="ClanakImages" src="@imagePath" asp-append-version="true" />
+
+                </div>
+            
+                <div style="text-align:center;padding-top:15%; ">
+                    <h4><a asp-controller="Clanak" asp-action="ViewClanak" asp-route-Id=@i.ClanakID>@i.Naslov</a></h4>
+                </div>
+            </div>
+        }
+    </div>
+    @*<div class="forma">
+
+            <a href="/Apotekar/DodajForma">Dodaj apotekara</a>
+            <br /> <br /> <br />
+            <a href="/Apotekar/PrikazForma">Prikazi/modificiraj apotekare</a>
+        </div>
+        <div class="forma">
+
+            <a href="/Dobavljac/DodajDobavljaca">Dodaj dobavljaca</a>
+            <br /> <br /> <br />
+            <a href="/Dobavljac/Prikaz">Prikazi dobavljace</a>
+        </div>*@
+    <nav aria-label="Clanak Paging">
+        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+    </nav>
+
+
+</body>
+</html>
+
+
+
+    

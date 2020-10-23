@@ -1,0 +1,58 @@
+﻿@using WebApp_Apoteka.ViewModels
+@{
+    ViewData["Title"] = "Prikaz";
+    int i = 1;
+    Layout = "DefaultLayout";
+}
+@model List<DobavljacView>
+
+
+<!DOCTYPE html>
+
+<style>
+    .btn{
+        padding:5px;
+        margin:10px;
+        text-decoration:none;
+    }
+</style>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PrikaziLijekove</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <table class="table table-bordered" style="background-color: #2b731e; color: white; box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+           border-radius: 10px;
+           border: 6px solid #2b731e; text-align: center">
+        <tr>
+            <th>R. br.</th>
+            <th>Naziv</th>
+            <th>Grad</th>
+            <th>Adresa</th>
+        </tr>
+        @foreach (var a in Model)
+        {
+    <tr style="background-color: #FAFAFA; color:#2b731e; text-align: center">
+        <td>@(i++)</td>
+        <td>@a.Naziv</td>
+        <td>@a.Grad</td>
+        <td>@a.Adresa</td>
+
+        @*<td>
+            <a href="/Apotekar/Obrisi?ApotekarID=@a.ID" style="text-decoration: none; height: 15px; background-color: #2b731e; color:white;
+                border-radius: 10px;  border: 6px solid #2b731e;  text-align: center">Brisi</a>
+            <a href="/Apotekar/DodajForma?ApotekarID=@a.ID" style="text-decoration: none; height: 15px; background-color: #2b731e; color:white;
+                border-radius: 10px;  border: 6px solid #2b731e;  text-align: center"> Uredi</a>
+        </td>*@
+
+    </tr>
+        }
+    </table>
+    <a class="btn btn-info" asp-action="DodajDobavljaca">Uredi</a>
+    <form action="/Dobavljac/DodajDobavljaca"> <input type="submit" value="Nazad" /></form>
+</body>
+</html>

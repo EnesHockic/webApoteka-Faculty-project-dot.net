@@ -1,0 +1,101 @@
+﻿
+@model WebApp_Apoteka.ViewModels.Clanak.AddEditClanakVM;
+@{
+
+    Layout = "DefaultLayout";
+}
+
+<link href="~/lib/Trumbowyg-master/dist/ui/trumbowyg.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>AddEditClanak</title>
+<style>
+    .forma {
+        max-width: 80%;
+        background: #FAFAFA;
+        padding: 30px;
+        margin: 30px auto;
+        box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+        border-radius: 10px;
+        border: 6px solid #2b731e;
+        text-align:center;
+    }
+
+        .forma input {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            font-family: Calibri;
+            font-size: medium;
+        }
+
+
+
+
+    #editor {
+        max-width: 100%;
+    }
+</style>
+<h2 style="text-align:center; margin-top:20px;">Objava konkursa za praksu</h2>
+<form asp-action="Spremi" method="post" class="forma" enctype="multipart/form-data">
+    <input asp-for="ID" hidden />
+
+    <span asp-validation-for="Naslov" class="text-danger"></span>
+    <input asp-for="Naslov" placeholder="Naslov članka" />
+    @if (Model.ID != 0)
+    {
+        <span>Trenutna slika: </span>
+        @if (Model.SlikaPath == null)
+        {
+            <span>Slika nije dodana</span>
+        }
+        else
+        {
+            var imagePath = "~/ClanakImages/" + Model.SlikaPath;
+            <img style="height:300px; width:auto;" src="@imagePath" asp-append-version="true" />
+
+        }
+    }
+    <div class="custom-file">
+        <span asp-validation-for="Slika" class="text-danger"></span>
+        <input asp-for="Slika" class="form-control custom-file-input" />
+        <label class="custom-file-label">Izaberite sliku...</label>
+    </div>
+    <span asp-validation-for="Sadrzaj" class="text-danger"></span>
+    <textarea id="editor" asp-for="Sadrzaj" placeholder="Sadržaj"></textarea>
+
+
+    <input type="submit" value="Objavi članak" class="btn btn-success" style="background-color:#2b731e; color: #FAFAFA " />
+    @if (Model.ID != 0)
+    {
+        <a class="btn-danger" asp-action="ObrisiClanak" asp-route-Id=@Model.ID>Obriši članak</a>
+
+    }
+
+</form>
+
+
+
+
+
+
+
+
+
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+
+        })
+    </script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/lib/Trumbowyg-master/dist/trumbowyg.min.js"></script>
+    <script>
+        $('#editor').trumbowyg();
+    </script>
+}

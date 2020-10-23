@@ -1,0 +1,63 @@
+﻿
+@{
+   
+
+
+}
+@model List<DetaljiNarudzbe>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Prikazi narudzbe</title>
+    <style>
+        tr {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+   
+    <div id="glavnii">
+        <h5> Datum narudžbe: @Model[0].datumNarudzbe</h5>
+        <hr />
+        @if (Model[0].status)
+        {
+            <h5>Poslano: @Model[0].datumSlanja</h5>
+
+            <hr />
+        }
+
+
+        <h5>Narudžba: </h5>
+        <table class="table table-striped" style="width: 100%">
+            <tr>
+                <th>Naziv lijeka</th>
+                <th>Cijena</th>
+                <th>Količina</th>
+                <th>Ukupno</th>
+
+            </tr>
+
+            @foreach (var i in Model)
+            {
+                <tr>
+                    <td>@i.nazivLijeka</td>
+                    <td>@i.cijenaLijeka KM</td>
+                    <td>@i.kolicina</td>
+                    <td>@i.ukupnaCijenaStavke KM</td>
+
+                </tr>
+            }
+        </table>
+        <hr />
+        <nobr>
+            <a href="/Narudzba/PrikaziNarudzbe" class="btn btn-secondary">Nazad</a>
+            <h5 style="margin-left: 48%; margin-top: -6%">Vrijednost narudžbe: @Model[0].vrijednostNarudzbe KM</h5>
+        </nobr>
+    </div>
+</body>
+</html>

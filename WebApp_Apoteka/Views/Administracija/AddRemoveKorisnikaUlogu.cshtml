@@ -1,0 +1,60 @@
+﻿@model List<KorisnikUlogaVM>
+@{
+    ViewData["Title"] = "AddRemoveKorisnikaUlogu";
+}
+
+@{
+    Layout = "DefaultLayout";
+    var ulogaID = ViewBag.UlogaID;
+    var NazivUloge = ViewBag.NazivUloge;
+}
+
+<style>
+    td{
+        padding:5px;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <h2>Dodaj ili ukloni korisnika iz uloge @NazivUloge</h2>
+    </div>
+    <div class="card-body">
+        <table>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td>
+                    <label>@Model[i].UserID</label>
+                </td>
+                <td>
+                    <label>@Model[i].UserName</label>
+                </td>
+                <td>
+                    <a class="btn btn-danger" asp-action="RemoveUserFromRole" asp-route-UserId="@Model[i].UserID" asp-route-RoleId="@ViewBag.ulogaId">Ukloni</a>
+                </td>
+            </tr>
+        }
+            </table>
+        @if (Model.Count == 0)
+        {
+            <h5 class="card-title">Nema korisnika</h5>
+        }
+    </div>
+    <div class="card-footer">
+        @if (NazivUloge == "Korisnik")
+        {
+            <a class="btn btn-primary" asp-controller="Account" asp-action="Registracija">Dodaj korisnika</a>
+        }
+        else if (NazivUloge == "Apotekar")
+        {
+            <a class="btn btn-primary" asp-controller="Account" asp-action="AddApotekara">Dodaj apotekara</a>
+
+        }
+        else if (NazivUloge == "Admin")
+        {
+            <a class="btn btn-primary" asp-controller="Account" asp-action="AddAdmina">Dodaj admina</a>
+        }
+        <a asp-action="UrediUlogu" asp-route-id="@ulogaID" class="btn btn-primary">Nazad </a>
+    </div>
+</div>
+

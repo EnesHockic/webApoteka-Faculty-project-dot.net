@@ -1,0 +1,98 @@
+﻿
+@{
+    Layout = "DefaultLayout";
+
+
+}
+@model LijekView
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+   
+    <title>PrikaziLijek</title>
+    <style>
+        #form {
+            max-width: 40%;
+            background: #FAFAFA;
+            padding: 10px;
+            margin: 10px auto;
+            box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+            border-radius: 10px;
+            border: 6px solid #2b731e;
+        }
+
+        h5 {
+            font-family: Calibri;
+            margin-top: -14px;
+            color: #2b731e;
+            font-size: 15px;
+        }
+
+        h4 {
+            font-family: Calibri;
+            margin-bottom: -14px;
+            font-size: 20px;
+        }
+
+        hr {
+            border-color: #2b731e;
+        }
+    </style>
+</head>
+<body>
+    
+    <form asp-action="DodajUKosaricu" id="form" method="post">
+        @foreach (var l in Model.podaci)
+        {
+            <input asp-for="LijekID" value="@l.LijekID" hidden />
+
+
+
+            <h4>@l.NazivLijeka</h4>
+            <hr>
+            <h5>Naziv lijeka</h5>
+            <h4>@l.NacinPrimjene</h4>
+            <hr>
+            <h5>Nacin primjene</h5>
+            <h4>@l.NazivKategorije</h4>
+            <hr>
+            <h5>Kategorija</h5>
+            <h4>@l.NazivProizvodjaca</h4>
+            <hr>
+            <h5>Proizvođač</h5>
+            <h4>@l.RokTrajanjaMjeseci</h4>
+            <hr>
+            <h5>Rok trajanja (izražen u mjesecima)</h5>
+            <h4>@l.ProdajnaCijena KM</h4>
+            <hr>
+            <h5>Cijena</h5>
+
+
+
+
+            <br />
+            <input asp-for="OdabranaKolicina" style=" margin-bottom: 10px; width: 50%;
+                 padding: 10px;
+                    font-family: Calibri; font-size: 20px" placeholder="Unesite kolicinu" />
+        
+            <span asp-validation-for="OdabranaKolicina"style="color: red; font-family: Calibri"></span>
+            <h5 style="margin-top: -2%">Unesite količinu</h5>
+            <br />
+            @if (Model.OdabranaKolicina > Model.Kolicina || Model.OdabranaKolicina > 3)
+            {
+                <span style="color: red; font-family: Calibri; margin-top: 20%">Trenutno stanje lijeka je @Model.Kolicina. Maksimalno mozete naručiti 3!</span>
+            }
+
+           <input asp-for="Kolicina" hidden />
+
+            <input type="submit" value="Dodaj u kosaricu" class="btn btn-success" style="width: 100%" />
+
+
+        }
+
+    </form>
+    <a href="/Lijek/PrikaziLijekove" class="btn btn-secondary" style="margin-left: 30%">Nazad</a>
+</body>
+</html>

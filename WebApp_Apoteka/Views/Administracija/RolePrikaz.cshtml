@@ -1,0 +1,106 @@
+﻿@model IEnumerable<IdentityRole>
+@{
+    Layout = "DefaultLayout";
+    ViewData["Title"] = "RolePrikaz";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <style>
+        .forma {
+            max-width: 50%;
+            background: #FAFAFA;
+            padding: 30px;
+            margin: 50px auto;
+            box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+            border-radius: 10px;
+            border: 6px solid #2b731e;
+        }
+
+            .forma input {
+                margin-bottom: 20px;
+                width: 100%;
+                padding: 10px;
+                font-family: Calibri;
+                font-size: medium;
+            }
+
+        select {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            font-family: Calibri;
+            font-size: medium;
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            font-family: Calibri;
+            font-size: medium;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            margin: 0;
+        }
+
+        .forma input {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            font-family: Calibri;
+            font-size: medium;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prikaz uloga</h1>
+
+    @if (Model.Any())
+    {
+        <a class="btn btn-primary mb-3" asp-action="CreateRole" asp-controller="Administracija">Dodaj novu ulogu</a>
+        foreach (var role in Model)
+        {
+            <div class="card mb-3">
+                <div class="card-header">
+                    Role id : @role.Id
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@role.Name</h5>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary" asp-action="UrediUlogu"
+                       asp-controller="Administracija" asp-route-id="@role.Id">Uredi</a>
+                    <a class="btn btn-danger">Izbrisi</a>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="card" style="padding-left:30px">
+            <div class="card-header">
+                No roles created
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    Za dodavanje uloge pritisnite dugme ispod
+                </h5>
+                <a asp-action="CreateRole" asp-controller="Administracija" class="btn btn-primary">
+                    Kreiraj ulogu
+                </a>
+            </div>
+        </div>
+    }
+</body>
+</html>
+

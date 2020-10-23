@@ -1,0 +1,56 @@
+﻿@model WebApp_Apoteka.ViewModels.Konkurs.DetaljiKorisnikaVM;
+
+
+<style>
+    #Detalji main{
+        width:100%;
+    }
+</style>
+
+<div id="Detalji main">
+    <table>
+        <tr>
+            <td>
+                <strong>Ime</strong>
+            </td>
+            <td>@Model.Ime</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Prezime</strong>
+            </td>
+            <td>@Model.Prezime</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Email</strong>
+            </td>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Telefon</strong>
+            </td>
+            <td>@Model.Telefon</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Mjesto rođenja</strong>
+            </td>
+            <td>@Model.OpstinaRodjenja</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Adresa</strong>
+            </td>
+            <td>@Model.Adresa</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Datum rođenja</strong>
+            </td>
+            <td>@Model.DatumRodjenja</td>
+        </tr>
+        
+    </table>
+</div>

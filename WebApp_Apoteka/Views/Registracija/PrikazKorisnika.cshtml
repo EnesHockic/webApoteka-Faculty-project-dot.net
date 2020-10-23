@@ -1,0 +1,61 @@
+﻿@using WebApp_Apoteka.ViewModels
+@{
+    Layout = "DefaultLayout";
+
+    ViewData["Title"] = "PrikazKorisnika";
+    int i = 1;
+}
+@model List<KorisnikView>
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PrikaziLijekove</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <table class="table table-bordered" style="background-color: #2b731e; color: white; box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+           border-radius: 10px;
+           border: 6px solid #2b731e; text-align: center">
+        <tr>
+            <th>R. br.</th>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Datum rodjenja</th>
+            <th>Mjesto rodjenja</th>
+            <th>Adresa</th>
+            <th>Telefon</th>
+            <th>Tip korisnika</th>
+            <th>Email</th>
+            <th>Bonova</th>
+            <th>Opcije</th>
+        </tr>
+        @foreach (var a in Model)
+        {
+    <tr style="background-color: #FAFAFA; color:#2b731e; text-align: center">
+        <td>@(i++)</td>
+        <td>@a.Ime</td>
+        <td>@a.Prezime</td>
+        <td>@a.DatumRodjenja>/td>
+        <td>@a.OpstinaRodjenja</td>
+        <td>@a.Adresa</td>
+        <td>@a.Telefon</td>
+        <td>@a.TipKorisnika</td>
+        <td>@a.Email</td>
+        <td>@a.Bonovi</td>
+        <td>
+            <a href="/Registracija/Obrisi?ID=@a.ID" style="text-decoration: none; height: 15px; background-color: #2b731e; color:white;
+                border-radius: 10px;  border: 6px solid #2b731e;  text-align: center">Brisi</a>
+        </td>
+     </tr>
+        }
+    </table>
+    <form action="/Home/Index"> <input type="submit" value="Nazad" /></form>
+
+</body>
+</html>

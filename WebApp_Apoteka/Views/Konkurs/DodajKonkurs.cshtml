@@ -1,0 +1,69 @@
+﻿@model DodajKonkursVM;
+@{
+    Layout = "DefaultLayout";
+}
+
+<link href="~/lib/Trumbowyg-master/dist/ui/trumbowyg.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<title>DodajKonkurs</title>
+<style>
+    .forma {
+        max-width: 80%;
+        background: #FAFAFA;
+        padding: 30px;
+        margin: 30px auto;
+        box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+        border-radius: 10px;
+        border: 6px solid #2b731e;
+        text-align: center;
+    }
+
+        .forma input {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            font-family: Calibri;
+            font-size: medium;
+        }
+
+
+
+
+    #editor {
+        max-width: 100%;
+    }
+</style>
+<h2 style="text-align:center; margin-top:20px;">Objava konkursa za praksu</h2>
+<form asp-action="PohraniKonkurs" method="post" class="forma">
+    <input asp-for="ID" hidden />
+    <input asp-for="Stanje" hidden />
+    <input asp-for="DatumObjave" hidden />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <span asp-validation-for="Naziv" class="text-danger"></span>
+    <input asp-for="Naziv" placeholder="Naziv konkursa" />
+
+
+    <span asp-validation-for="Rok" class="text-danger"></span>
+    <label>Rok za prijavu</label>
+    <input asp-for="Rok"/>
+
+    <span asp-validation-for="Sadrzaj" class="text-danger"></span>
+    <textarea id="editor" asp-for="Sadrzaj" placeholder="Sadržaj"></textarea>
+
+    <input type="submit" value="Objavi konkurs" class="btn btn-success" style="background-color:#2b731e; color: #FAFAFA " />
+
+
+</form>
+
+@section Scripts{
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/lib/Trumbowyg-master/dist/trumbowyg.min.js"></script>
+    <script>
+        $('#editor').trumbowyg();
+    </script>
+}

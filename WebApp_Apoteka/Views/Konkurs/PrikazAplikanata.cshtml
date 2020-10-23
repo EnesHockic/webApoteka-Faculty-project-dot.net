@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "DefaultLayout";
+    int a = 1;
+
+}
+@model PrikazAplikanataVM
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Aplikanti za konkurs</title>
+    <style>
+        #glavnii {
+            margin-left: 25%;
+            margin-top: 5%;
+            border: 1px solid green;
+            margin-right: 25%;
+            padding: 10px;
+            border-radius: 2%;
+        }
+
+        tr {
+            text-align: center;
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align:center; margin-top:20px;">Lista aplikanata za konkurs</h2>
+
+    <table style="width:100%">
+            
+        <tr>
+            <th>Naziv</th>
+            <th>Datum objave</th>
+            <th>Rok za prijavu</th>
+        </tr>
+        <tr>
+            <td>@Model.Naziv</td>
+            <td>@Model.DatumObjave</td>
+            <td>@Model.Rok</td>
+        </tr>
+    </table>
+
+
+    <br /><br />
+    <div id="detalji">
+        <table class="table table-striped">
+            <tr >
+                <td ></td>
+                <td >Ime i Prezime</td>
+                <td >Životopis</td>
+                <td >Motivacijsko pismo</td>
+                
+            </tr>
+            @foreach (var i in Model.aplikanti)
+            {
+            <tr >
+                <td >@(a++)</td>
+                <td >
+                    <button class="btn btn-success btnPrikaz" type="button" idValue="@i.AplikantID">@i.Ime @i.Prezime</button>
+                </td>
+
+
+                <td ><a asp-action="PreuzmiCV" asp-route-CVpath=@i.CV>Preuzmi</a></td>
+                <td ><a asp-action="PreuzmiML" asp-route-MLpath=@i.ML>Preuzmi</a></td>
+            </tr>
+            }   
+
+        </table>
+    </div>
+            <div id="DetaljiDiv"></div>
+
+</body>
+</html>
+
+
+<script>
+    $(".btnPrikaz").click(function () {
+
+            var btn = $(this);
+            var id = btn.attr("idValue");
+
+            $.ajax({
+                url: "@Url.Action("DetaljiKorisnika", "Konkurs")",
+                type: "GET",
+                data: { aplikantId: id },
+                success: function (data, event) {
+                    $("#DetaljiDiv").html(data);
+                }
+            });
+        });
+</script>

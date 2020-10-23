@@ -1,0 +1,55 @@
+﻿@{ 
+    
+}
+@model List<DetaljiStavkiNabavke>
+
+<style>
+   #glavnii{
+      margin-left: 25%;
+      margin-top: 5%;
+      border: 1px solid green;
+      margin-right: 25%;
+      padding: 10px;
+      border-radius: 2%;
+   }
+</style>
+    <div id="glavnii">
+        <h5> Datum nabavke: @Model[0].datumNabavke</h5>
+        <hr  />
+        @if (Model[0].status)
+        {
+            <h5>Dostavljeno datuma: @Model[0].datumPrimanja</h5>
+
+        <hr />
+        }
+    
+
+        <h5>Narudžba: </h5>
+        <table class="table table-striped" style="width: 100%">
+            <tr>
+                <th>Naziv lijeka</th>
+                <th>Nabavna cijena</th>
+                <th>Količina</th>
+                <th>Ukupno</th>
+
+            </tr>
+
+            @foreach (var i in Model)
+            {
+                <tr>
+                    <td>@i.nazivLijeka</td>
+                    <td>@i.nabavnaCIjena KM</td>
+                    <td>@i.kolicina</td>
+                    <td>@i.ukupnaCijenStavke KM</td>
+
+                </tr>
+              }
+            </table>
+        <hr />
+        <nobr>
+            <a href="/Nabavka/ListaNarucenihLijekova" class="btn btn-secondary">Nazad</a>
+            <h5 style="margin-left: 48%; margin-top: -6%">Vrijednost narudžbe: @Model[0].vrijednostNarudzbe KM</h5>
+        </nobr>
+    </div>
+
+

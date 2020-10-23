@@ -1,0 +1,129 @@
+﻿@inject SignInManager<AppUser> signInManager
+@{
+    Layout = "DefaultLayout";
+    var stanjeKosarice = (int)ViewData["stanjeKosarice"];
+
+}
+@using WebApp_Apoteka.ViewModels;
+@model LijekView
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PrikaziLijekove</title>
+   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        th, tr, td {
+            text-align: center;
+            border: 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <br /><br />
+    <h3 class="text-success">Prikaz dostupnih lijekova</h3>
+    <br />
+
+    <table class="table table-bordered" style="background-color: #2b731e; color: white;   ">
+        <tr>
+
+            <th>Naziv lijeka</th>
+
+            <th>Farmaceutski oblik</th>
+            <th> Kvalitativni i kvantitativni sastav</th>
+
+            <th>Cijena (KM)</th>
+
+
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+            {
+                <th>Modifikacija podataka</th>
+            }
+            else if (signInManager.IsSignedIn(User) && User.IsInRole("Korisnik"))
+            {
+                <th>Pregled</th>
+            }
+
+        </tr>
+
+        @foreach (var l in Model.podaci)
+        {
+            if (l.Kolicina > 0)
+            {
+                <tr style="background-color: #FAFAFA; color:#2b731e; text-align: center">
+
+                    <td>@l.NazivLijeka</td>
+
+                    <td>@l.FarmaceutskiOblik</td>
+                    <td>@l.KvalitativniIKvantitativniSastav</td>
+
+                    <td>@l.ProdajnaCijena KM</td>
+
+
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <a href="/Lijek/Uklanjanje?id=@l.LijekID" class="btn btn-danger">Brisi</a>
+                            <a href="/Lijek/DodajLijek?id=@l.LijekID" class="btn btn-info">Uredi</a>
+
+                        </td>
+                    }
+                    else if (signInManager.IsSignedIn(User) && User.IsInRole("Korisnik"))
+                    {
+                        <td><a href="/Narudzba/PrikaziLijek?id=@l.LijekID" class="btn btn-success">+</a></td>
+                    }
+
+                </tr>
+            }
+
+
+        }
+    </table>
+    @if (stanjeKosarice > 0 && User.IsInRole("Korisnik"))
+    {
+        <a href="/Narudzba/PregledKosarice" class="btn btn-success">Pregledaj kosaricu</a>
+
+    }
+    @if (Model.postojeci)
+    {
+        <div class="container">
+
+            <div class="modal fade" id="myModal" role="dialog" style="margin-top: 15%">
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+
+                        <div class="modal-body">
+                            <nobr>
+                                <h4>Lijek koji ste odabrali se već nalazi u vašoj košarici.  </h4>
+                                <a href="/Lijek/PrikaziLijekove" class="btn btn-success" data-ng-click="modal" style="margin-top:-13%; margin-left: 90%">OK</a>
+                            </nobr>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    }
+ 
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $("#myModal").modal('show');
+    }
+    );
+   
+</script>

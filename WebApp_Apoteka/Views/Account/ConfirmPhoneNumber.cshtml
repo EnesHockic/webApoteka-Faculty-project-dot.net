@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "DefaultLayout";
+    ViewData["Title"] = "ConfirmPhoneNumber";
+    
+}
+<style>
+    h3 {
+        text-align: center;
+        font-weight: 700;
+        font-family: "Roboto", sans-serif;
+        font-size: 1.7em;
+        line-height: 1.3;
+        color: #555;
+        width: 100%;
+        margin-bottom: .3em;
+    }
+    body{
+        text-align:center;
+    }
+    .form-control{
+        width:auto;
+        display:inline-block;
+    }
+    .btn{
+        margin-top:10px;
+    }
+</style>
+<div>
+    <h3>Potvrda telefonskog broja</h3><br />
+
+    <form method="post" class="forma" asp-action="ConfirmPhoneNumberPost" >
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label>Telefon: </label><br />
+            <strong class="form-control" >@ViewBag.Telefon</strong><br />
+
+            <a asp-action="ConfirmPhoneNumberPost" asp-route-brTelefona="@ViewBag.Telefon" asp-route-userName="@ViewBag.userName" asp-route-Operacija="@ViewBag.Operacija" class="btn btn-primary" >Pošalji kod</a>
+        </div>
+    </form>
+</div>

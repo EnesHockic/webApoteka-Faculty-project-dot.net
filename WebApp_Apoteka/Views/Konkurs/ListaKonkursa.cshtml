@@ -1,0 +1,86 @@
+﻿
+@{
+    Layout = "DefaultLayout";
+    int a = 1;
+
+}
+@model List<WebApp_Apoteka.ViewModels.Konkurs.ListaKonkursaVM>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Lista konkursa</title>
+    <style>
+        #glavnii {
+            margin-left: 25%;
+            margin-top: 5%;
+            border: 1px solid green;
+            margin-right: 25%;
+            padding: 10px;
+            border-radius: 2%;
+        }
+
+        tr {
+            text-align: center;
+            border: 1px solid;
+        }
+        #btnObjava {
+            position: relative;
+            float: right;
+            left: 20px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    @if (User.IsInRole("Apotekar"))
+    {
+        <a id="btnObjava" class="btn-light" asp-action="DodajKonkurs" >Objavi konkurs</a>
+    }
+    <h2 style="text-align:center; margin-top:20px;">Konkursi</h2>
+
+
+
+
+    <br /><br />
+    <div id="detalji">
+        <table class="table table-striped" style="">
+            <tr>
+                <th></th>
+                <th>Naziv</th>
+                <th>Datum objave</th>
+
+                <th>Rok za prijavu</th>
+                <th>Status</th>
+                <th>Opcije</th>
+            </tr>
+            @foreach (var i in Model)
+            {
+                <tr>
+
+                    <td>@(a++)</td>
+                    <td><a style="font:bold;color:green;" asp-action="PrikaziKonkurs" asp-route-Id=@i.ID>@i.Naziv</a></td>
+                    <td>@i.DatumObjaveStr</td>
+                    <td>@i.RokStr</td>
+                    @if (i.Stanje)
+                    {
+                        <td style="color:green">Otvoren</td>
+                    }
+                    else
+                    {
+                        <td style="color:red">Zatvoren</td>
+                    }
+                    @if (User.IsInRole("Admin") || User.IsInRole("Apotekar"))
+                    {
+                        <td><a asp-action="DodajKonkurs" asp-route-Id=@i.ID>Uredi</a>   |   <a asp-action="PrikazAplikanata" asp-route-Id=@i.ID>Aplikanti</a></td>
+                    }
+                </tr>
+            }
+
+        </table>
+    </div>
+
+</body>
+</html>

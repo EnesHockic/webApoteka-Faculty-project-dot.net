@@ -1,0 +1,111 @@
+﻿@model WebApp_Apoteka.ViewModels.Account.DetaljiKorisnikaVM
+@{
+    ViewData["Title"] = "DetaljiUsera";
+    Layout = "DefaultLayout";
+}
+
+
+<style>
+    td {
+        padding: 5px;
+    }
+    .btn{
+        float:right;
+        position:relative;
+        top:20px;
+        left:30px;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Profil korisnika @Model.Email</h2>
+        <a asp-action="UrediUsera" class="btn-primary btn">Uredi</a>
+    </div>
+    <div class="card-body">
+        <table>
+            @if (User.IsInRole("Korisnik") || User.IsInRole("Apotekar"))
+            {
+                <tr>
+                    <td>
+                        <strong>Ime i prezime</strong>
+                    </td>
+                    <td>
+                        <label>@Model.Ime @Model.Prezime</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Datum rođenja</strong>
+                    </td>
+                    <td>
+                        <label>@Model.DatumRodjenja</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Mjesto rođenja</strong>
+                    </td>
+                    <td>
+                        <label>@Model.OpstinaRodjenja</label>
+                    </td>
+                </tr>
+            }
+            @if (User.IsInRole("Apotekar"))
+            {
+                <tr>
+
+                    <td>
+                        <strong>JMBG</strong>
+                    </td>
+                    <td>
+                        <label>@Model.JMBG</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Datum zaposlenja</strong>
+                    </td>
+                    <td>
+                        <label>@Model.DatumZaposlenja</label>
+                    </td>
+                </tr>
+            }
+            @if (User.IsInRole("Korisnik"))
+            {
+                <tr>
+
+                    <td>
+                        <strong>Adresa</strong>
+                    </td>
+                    <td>
+                        <label>@Model.Adresa</label>
+                    </td>
+                </tr>
+                
+            }
+            
+            
+            <tr>
+                <td>
+                    <strong>Telefon</strong>
+                </td>
+                <td>
+                    <label>@Model.Telefon</label>
+                    @if (!Model.ConfirmedTelefon)
+                    {
+                        <a asp-action="ConfirmPhoneNumber" asp-route-Operacija=Registracija asp-route-brTelefona="@Model.Telefon">Potvrdi broj telefona i ukljuci autentifikaciju sa dva faktora</a>
+                    }
+                </td>
+            </tr>
+
+
+        </table>
+        
+    </div>
+    <div class="card-footer">
+        
+        <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Nazad </a>
+    </div>
+</div>
+

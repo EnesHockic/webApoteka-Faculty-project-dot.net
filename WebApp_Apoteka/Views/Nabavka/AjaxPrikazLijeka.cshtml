@@ -1,0 +1,97 @@
+﻿@model LijekKolicinaView
+@{
+    if (Model.pronadjenError == true)
+    {
+        Layout ="DefaultLayout";
+    }
+
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Prikazi lijek</title>
+
+
+    <style>
+        #form {
+            max-width: 30%;
+            background: #FAFAFA;
+            padding: 10px;
+            margin: 10px auto;
+            box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+            border-radius: 10px;
+            border: 6px solid #2b731e;
+        }
+
+        h5 {
+            font-family: Calibri;
+            margin-top: -10px;
+            color: #2b731e;
+        }
+
+        h4 {
+            font-family: Calibri;
+            margin-bottom: -5px;
+            font-size: 20px;
+        }
+
+        hr {
+            border-color: #2b731e;
+        }
+    </style>
+</head>
+<body>
+    <br /><br />
+
+          <form asp-action="DodajKosaricu" id="form" method="post">
+
+              <input asp-for="lijekID" value="@Model.lijekID" hidden />
+
+
+
+              <h4>@Model.nazivLijeka</h4>
+              <hr>
+              <h5>Naziv lijeka</h5>
+              <h4>@Model.nabavnaCijenaLijeka</h4>
+              <hr>
+              <h5>Nabavna cijena</h5>
+
+              @if (Model.kolicina == 0)
+              {
+                  <input asp-for="kolicina" name="kolicina" style=" margin-bottom: 10px; width: 50%;
+                 padding: 10px;
+                    font-family: Calibri; font-size: 20px" placeholder="Unesite kolicinu" />
+
+                  <span asp-validation-for="kolicina" class="text-danger"></span>
+              }
+              else
+              {
+                  <input asp-for="kolicina" name="kolicina" value="@Model.kolicina" style=" margin-bottom: 10px; width: 50%;
+                 padding: 10px;
+                    font-family: Calibri; font-size: 20px" placeholder="Unesite kolicinu" />
+
+                  <span asp-validation-for="kolicina" class="text-danger"></span>
+              }
+
+
+              <h5>Unesite kolicinu</h5>
+              <br />
+
+
+
+              <input type="submit" value="Dodaj u kosaricu" class="btn btn-success" style="width: 100%" />
+
+
+
+
+          </form>
+    <a href="/Nabavka/PrikaziStanje" class="btn btn-secondary" style="margin-left: 35%">Nazad</a>
+</body>
+</html>
+
+

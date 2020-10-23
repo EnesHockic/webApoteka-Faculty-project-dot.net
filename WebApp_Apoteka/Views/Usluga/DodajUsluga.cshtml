@@ -1,0 +1,117 @@
+﻿@using WebApp_Apoteka.ViewModels;
+
+<!DOCTYPE html>
+@{
+    Layout = "DefaultLayout";
+
+}
+@model AddUslugaViewM
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Dodaj uslugu</title>
+    <style>
+        .forma {
+            max-width: 50%;
+            background: #FAFAFA;
+            padding: 30px;
+            margin: 50px auto;
+            box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+            border-radius: 10px;
+            border: 6px solid #2b731e;
+        }
+
+        .forma input {
+                margin-bottom: 20px;
+                width: 100%;
+                padding: 10px;
+                font-family: Calibri;
+                font-size: medium;
+            }
+       
+    </style>
+</head>
+<body>
+     <div></div>
+     <div id="forma">
+         <form asp-action="PohraniUslugu" method="post" class="forma">
+             @if (Model.ID == 0)
+             {
+                 <input asp-for="ID" hidden />
+                 <span asp-validation-for="Naziv" class="text-danger"></span>
+                 <input asp-for="Naziv" placeholder="Naziv usluge" />
+
+                 <span asp-validation-for="DatumVrijeme" class="text-danger"></span>
+                 if (Model.postoji)
+                 {
+                     <span class="text-danger">Termin koji ste odabrali je zauzet!</span>
+                 }
+                 else if (Model.neispravanDatum)
+                 {
+                     <span class="text-danger">Unesite validno datum i vrijeme!</span>
+
+                 }
+                 @*<input type="datetime" asp-for="DatumVrijeme" />*@
+                 <input type="datetime"
+                        asp-for="DatumVrijeme"
+                        value="@DateTime.Now.ToString()">
+
+                 <h5 style="color:#2b731e; font-family: Calibri; font-size: medium; margin-top: -3%">
+                     Datum i vrijeme izvršavanja usluge
+                 </h5>
+                 <span asp-validation-for="Napomena" class="text-danger"></span>
+                 <input asp-for="Napomena" placeholder="Napomena" />
+
+                 <span asp-validation-for="BrojPacijenata" class="text-danger"></span>
+                 <input asp-for="BrojPacijenata" placeholder="Broj pacijenata" />
+                 <h5 style="color:#2b731e; font-family: Calibri; font-size: medium;margin-top: -3%">
+                     Broj pacijenata
+                 </h5>
+                 <br />
+
+                 <input type="submit" value="Dodaj uslugu" class="btn btn-success" style="width: 100%" />
+             }
+             else
+             {
+                 <input asp-for="ID" hidden />
+                 <span asp-validation-for="Naziv" class="text-danger"></span>
+
+                 <input asp-for="Naziv" value=@Model.Naziv />
+                 if (Model.postoji)
+                 {
+                     <span class="text-danger">Termin koji ste odabrali je zauzet!</span>
+                 }
+                 else if (Model.neispravanDatum)
+                 {
+                     <span class="text-danger">Unesite validno datum i vrijeme!</span>
+
+                 }
+
+                 @*<span asp-validation-for="DatumVrijeme" class="text-danger"></span>*@
+
+                 <input type="datetime" asp-for="DatumVrijeme" />
+                 <h5 style="color:#2b731e; font-family: Calibri; font-size: medium;margin-top: -3%">
+                     Datum izvršavanja usluge
+                 </h5>
+                 <span asp-validation-for="Napomena" class="text-danger"></span>
+
+                 <input asp-for="Napomena" value=@Model.Napomena />
+
+                 <span asp-validation-for="BrojPacijenata" class="text-danger"></span>
+
+                 <input asp-for="BrojPacijenata" value=@Model.BrojPacijenata />
+                 <h5 style="color:#2b731e; font-family: Calibri; font-size: medium;margin-top: -3%">
+                     Broj pacijenata
+                 </h5>
+                 <br />
+
+                 <input type="submit" value="Uredi uslugu" class="btn btn-success" style="width: 100%" />
+             }
+
+         </form>
+         <a href="/Usluga/PrikaziUsluge" class="btn btn-secondary" style="margin-left: 25%; margin-top: -5%">Nazad</a>
+     </div>
+    <div></div>
+</body>
+</html>
